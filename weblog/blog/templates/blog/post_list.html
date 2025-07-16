@@ -1,0 +1,20 @@
+{% extends "parents/base.html"%}
+{% load jformat%}
+{%block title %} posts{%endblock%}
+{%block content %}
+
+<ol style="--length: {{posts|length}}" role="list">
+     {% for post in posts %}
+	<li style="--i: {{forloop.counter}}">
+		 <h3>
+            <a href="{{post.get_absolute_url}}">{{post.title}}</a>
+
+         </h3><p>{{post.published|jformat:"%Y-%m-%d"}}</p>
+		<p>
+        {{post.description|truncatewords:6}}
+    </p>
+	</li>
+
+<!--  we have to end for tag  -->
+      {% endfor %} </ol>
+{%endblock%}
