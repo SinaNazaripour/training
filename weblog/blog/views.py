@@ -1,5 +1,10 @@
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.transaction import commit
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils.translation.trans_null import activate
+from django.views.decorators.http import require_POST
 from django.views.generic import ListView
 
 from .models import Post, Ticket
@@ -34,7 +39,14 @@ def post_list(request):
 
 def post_detail(request, id):
     post = get_object_or_404(Post, id=id, status=Post.Status.PUBLISHED)
-    return render(request, 'blog/post_detail.html', {"post": post})
+    comments=post.comments.filter(activation=True)
+    form=CommentForm()
+    context={
+        "post": post,
+        "form":form,
+        "comments":comments
+    }
+    return render(request, 'blog/post_detail.html', context)
 
 
 def ticket(request):
@@ -48,3 +60,22 @@ def ticket(request):
     else:
         form = TicketForm()
     return render(request, "forms/ticket.html", {"form": form})
+
+@login_required
+@require_POST
+def comment(request,id):
+    post=get_object_or_404(Post,id=id,status=Post.Status.PUBLISHED)
+    comment_obj=None
+    form=CommentForm(request.POST)
+    if form.is_valid():
+        comment_obj=form.save(commit=False)
+        comment_obj.name=request.user
+        comment_obj.post=post
+        comment_obj.save()
+    context={
+        "post":post,
+        "comment":comment_obj,
+        "form":form
+    }
+    return render(request,"forms/comment.html",context)
+

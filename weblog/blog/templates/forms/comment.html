@@ -1,0 +1,14 @@
+{% extends "parents/base.html"%}
+{%block title %}Comment{%endblock%}
+{%block content%}
+<form method="post">
+    {%csrf_token%}
+    {{form}}
+<!--    <input type="submit" value="ارسال">-->
+</form>
+{% if comment %}
+    <p style="color: chartreuse;"> کامنت شما ارسال شد</p>
+    <a href="{{post.get_absolute_url}}">بازگشت به پست</a>
+
+{% endif %}
+{%endblock%}

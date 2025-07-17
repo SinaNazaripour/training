@@ -7,6 +7,7 @@ urlpatterns=[
     path('posts/',views.post_list,name='post_list'),
     # path('posts/',PostListView.as_view(),name='post_list'),
     path('posts/<int:id>',views.post_detail,name='post_detail'),
-    path('ticket/',views.ticket,name="ticket")
+    path('ticket/',views.ticket,name="ticket"),
+    path('posts/<int:id>/comment/',views.comment,name="comment")
 
 ]

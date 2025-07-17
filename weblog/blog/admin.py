@@ -2,7 +2,8 @@
 from django.contrib import admin
 from django_jalali.admin.filters import JDateFieldListFilter
 
-from .models import Post,Ticket
+from .models import Post, Ticket, Comment
+
 admin.sites.AdminSite.site_header =" هدر "
 admin.sites.AdminSite.site_title ="پنل مدیریت تایتل سایت"
 admin.sites.AdminSite.index_title ="پنل مدیریت تایتل ایندکس "
@@ -24,4 +25,12 @@ class TicketAdmin(admin.ModelAdmin):
     list_display = ["author_name", "title", "date"]
     list_display_links = ["title"]
     search_fields = ["title", "body"]
-    # ordering = ["date"]
+    ordering = ["date"]
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ["name", "body", "created","post","activation"]
+    list_display_links = ["name"]
+    search_fields = ["name", "body"]
+    ordering = ["created"]
+    list_editable = ["activation"]

@@ -2,4 +2,17 @@
 {%block title %}post{%endblock%}
 {%block content %}
    <h1>{{post.title}}</h1>
+
+   <form method="post" action="{% url 'blog:comment' post.id %}">
+      {%csrf_token%}
+      {{form.as_p}}
+      <input type="submit" value="ارسال">
+   </form>
+   <div class="comments_box">
+      <h1>کامنت ها</h1>
+      {% for comment in comments  %}
+         <div class="comment">{{comment.name}}:{{comment.body}}</div>
+      {% endfor %}
+      
+   </div>
 {%endblock%}

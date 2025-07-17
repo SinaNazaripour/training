@@ -106,3 +106,20 @@ h3::before {
     border-radius: 50px;
     height:auto
 }
+
+.comments_box{
+	border: 1px solid gray;
+	border-radius: 4px;
+	overflow-y: scroll;
+	margin: auto;
+	max-width: 1000px;
+	max-height: 400px;
+}
+.comment{
+	border: 1px solid gray;
+	color: darkblue;
+	border-radius: 3px;
+	border-top: 10px solid red;
+	max-width: 700px;
+	margin: 10px auto;
+}
