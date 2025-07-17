@@ -42,3 +42,17 @@ class Post(models.Model):
 
    def get_absolute_url(self):
        return reverse('blog:post_detail',args=[self.id])
+
+class Ticket(models.Model):
+    author_name=models.CharField(max_length=30)
+    author_email=models.EmailField()
+    title=models.CharField(max_length=30)
+    body=models.TextField(max_length=30)
+    date = jmodels.jDateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-date"]
+        indexes = [models.Index(fields=['-date'])]
+        # فارسی سازی
+        verbose_name = "تیکت"
+        verbose_name_plural = "تیکت ها"
