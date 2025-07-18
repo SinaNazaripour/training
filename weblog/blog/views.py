@@ -13,7 +13,7 @@ from .forms import *
 
 # Create your views here.
 def index(request):
-    context = {}
+    context = {"phrase":"**reza**"}
     return render(request, "blog/index.html", context)
 
 

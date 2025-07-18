@@ -1,7 +1,14 @@
 {% extends "parents/base.html"%}
+{% load blog_tags%}
 {%block title %} homePage{%endblock%}
 {%block content %}
     <p>
         index page
     </p>
+{%count_of_comments%}
+{%count_of_posts%}
+{% latest_p 3%}
+{%sum_of_reading%}
+{%most_pop_posts 1%}
+{{phrase|markdown}}
 {%endblock%}
