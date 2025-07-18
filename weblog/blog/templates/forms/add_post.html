@@ -1,0 +1,12 @@
+{% extends "parents/base.html"%}
+{%block title %}Add_Post{%endblock%}
+{%block content%}
+<form method="post">
+    {%csrf_token%}
+    {{form}}
+<!--    <input type="submit" value="ارسال">-->
+    <input type="submit">
+</form>
+
+
+{%endblock%}

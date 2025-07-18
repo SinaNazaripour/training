@@ -79,3 +79,15 @@ def comment(request,id):
     }
     return render(request,"forms/comment.html",context)
 
+@login_required
+def add_post(request):
+    if request.method=="POST":
+        form=PostForm(request.POST)
+        if form.is_valid():
+            post_obj=form.save(commit=False)
+            post_obj.author=request.user
+            post_obj.save()
+            return redirect('blog:post_list')
+    else:
+        form=PostForm()
+    return render(request,"forms/add_post.html",{"form":form})

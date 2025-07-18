@@ -2,7 +2,7 @@
 {% load jformat%}
 {%block title %} posts{%endblock%}
 {%block content %}
-
+<a href="{%url 'blog:add_post'%}">ایجاد پست</a>
 <ol style="--length: {{posts|length}}" role="list">
      {% for post in posts %}
 	<li style="--i: {{forloop.counter}}">

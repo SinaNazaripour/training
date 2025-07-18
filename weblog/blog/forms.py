@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Comment
+from .models import Comment,Post
 
 
 class TicketForm(forms.Form):
@@ -14,5 +14,12 @@ class CommentForm(forms.ModelForm):
         model=Comment
         fields=["body"]
         widgets={
-            'body':forms.TextInput
+            'body':forms.Textarea
+        }
+class PostForm(forms.ModelForm):
+    class Meta:
+        model=Post
+        fields=["title","description"]
+        widgets={
+            "description":forms.Textarea
         }
