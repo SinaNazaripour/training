@@ -23,3 +23,5 @@ class PostForm(forms.ModelForm):
         widgets={
             "description":forms.Textarea
         }
+class Search(forms.Form):
+    query=forms.CharField(max_length=50)

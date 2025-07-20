@@ -1,9 +1,7 @@
-from django.contrib.auth import login
+
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.db.transaction import commit
 from django.shortcuts import render, get_object_or_404, redirect
-from django.utils.translation.trans_null import activate
 from django.views.decorators.http import require_POST
 from django.views.generic import ListView
 
@@ -91,3 +89,16 @@ def add_post(request):
     else:
         form=PostForm()
     return render(request,"forms/add_post.html",{"form":form})
+
+def search(request):
+    query,results=None,[]
+    if 'query' in request.GET:
+        form=Search(data=request.GET)
+        if form.is_valid():
+            query=form.cleaned_data['query']
+            results=Post.publish.filter(description__contains=query)
+    context={
+        "results":results,
+         "query":query
+        }
+    return render(request, "blog/search.html", context)

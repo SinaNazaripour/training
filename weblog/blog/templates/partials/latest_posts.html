@@ -1,4 +1,9 @@
-{% for post in l_posts  %}
-<a href="{{post.get_absolute_url}}">{{post.title}}</a>
-<br>
-{% endfor %}
+
+<div class="widget">
+        <h3>🆕 پست‌های اخیر</h3>
+        <ul>
+          {% for post in l_posts  %} 
+          <li><a href="{{post.get_absolute_url}}">{{post.title}}</a></li>
+          {% endfor %}
+        </ul>
+      </div>

@@ -7,7 +7,7 @@ from markdown import markdown
 from ..models import *
 
 register=template.Library()
-@register.inclusion_tag("partials/latest_posts.html",name="latest_p")
+@register.inclusion_tag("partials/latest_posts.html",name="latest_posts")
 def latest_posts(count=3):
     l_posts=Post.publish.order_by("-published")[:count]
     context={
@@ -30,6 +30,10 @@ def total_time():
 @register.simple_tag(name="most_pop_posts")
 def pop_posts(count=3):
     return Post.publish.annotate(comment_count=Count("comments")).order_by("-comment_count")[:count]
+
+@register.simple_tag(name="most_active_users")
+def best_users(count=3):
+    return User.objects.annotate(posts_count=Count("posts")).order_by("-posts")[:count]
 
 @register.filter(name="markdown")
 def to_markdown(text):

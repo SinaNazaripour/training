@@ -1,20 +1,30 @@
 {% extends "parents/base.html"%}
+{% load static%}
 {%block title %} Ticket{%endblock%}
+{%block head%}<link rel="stylesheet" type="text/css" href="{% static 'css/ticket.css'%}"> {%endblock%}
 {%block content %}
-<form method="post">
-    {%csrf_token%}
-    نام
-    <input type="text" name="author_name" {% if form.author_name.value %}value="{{form.author_name.value}}"{% endif %}>
-    <br>
-    ایمیلل
-    <input type="email" name="author_email"{% if form.email.value %}value="{{form.author_email.value}}"{% endif %}><br>
-    موضوع
-    <input type="text" name="title"{% if form.title.value %}value="{{form.title.value}}"{% endif %}><br>
-    تیکت
-    <textarea name="body">{% if form.body.value %} {{form.body.value}} {% endif %}</textarea><br>
-    <input type="submit" value="ارسال">
-</form>
-<div class="errors">
+  <main class="container">
+    <section class="ticket-form">
+      <h2>ثبت تیکت جدید</h2>
+      <form method="post">
+        {%csrf_token%}
+        <label for="author_name">نام کاربری </label>
+        <input type="text" id="author_name" name="author_name" {% if form.author_name.value %}value="{{form.author_name.value}}"{% endif %}>
+
+        <label for="author_email">ایمیل</label>
+        <input type="text" id="author_email" name="author_email" {% if form.author_email.value %}value="{{form.author_email.value}}"{% endif %}>
+
+        <label for="title">موضوع</label>
+        <input type="text" id="title" name="title"{% if form.title.value %}value="{{form.title.value}}"{% endif %}>
+
+        <label for="body">پیام شما</label>
+         <textarea id="body" name="body">{% if form.body.value %} {{form.body.value}} {% endif %}</textarea>
+
+        <button type="submit">ارسال تیکت</button>
+      </form>
+    </section>
+  </main>
+  <div class="errors">
     {% if form.errors %}
         {% for field in form  %}
             {% if field.errors %}
@@ -27,6 +37,5 @@
     {% if form.non_field_errors %}
         {{form.non_field_errors}}
     {% endif %}
-
-</div>
+  </div>
 {%endblock%}

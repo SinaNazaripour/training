@@ -2,13 +2,41 @@
 {% load blog_tags%}
 {%block title %} homePage{%endblock%}
 {%block content %}
-    <p>
-        index page
-    </p>
-{%count_of_comments%}
-{%count_of_posts%}
-{% latest_p 3%}
-{%sum_of_reading%}
-{%most_pop_posts 1%}
+<section class="toolbar container">
+      <form method="get" action="{% url 'blog:search'%}" class="search-form">
+        {%csrf_token%}
+       <input type="text" placeholder="جستجوی پست‌ها..." name="query"/>
+       <input type="submit" value="جستجو" style="width: auto;">
+      </form>
+    <div class="buttons">
+      <a href="{%url 'blog:add_post'%}" class="btn btn-green" >➕ افزودن پست</a>
+      <a href="{%url 'blog:ticket'%}" class="btn btn-yellow">📝 ایجاد تیکت</a>
+    </div>
+       </section>
+    <aside class="sidebar">
+    {%latest_posts%}
+      
+
+      <div class="widget">
+        <h3>🔥 پربازدیدترین پست‌ها</h3>
+        <ul>
+        {% most_pop_posts as mp_posts%}
+        {%for post in mp_posts %}
+          <li><a href="{{post.get_absolute_url}}">{{post.title}}</a></li>
+        {%endfor%}
+        </ul>
+      </div>
+      {%endwith}
+
+      <div class="widget">
+        <h3>👤 فعال‌ترین کاربران</h3>
+        <ul>
+          {%most_active_users as ma_user%}
+          {%for user in ma_user%}
+          <li>{{user.username}} ({{user.posts.count}}پست)</li>
+          {%endfor%}
+        </ul>
+      </div>
+    </aside>
 {{phrase|markdown}}
 {%endblock%}

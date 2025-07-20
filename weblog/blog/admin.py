@@ -25,7 +25,7 @@ class TicketAdmin(admin.ModelAdmin):
     list_display = ["author_name", "title", "date"]
     list_display_links = ["title"]
     search_fields = ["title", "body"]
-    ordering = ["date"]
+    ordering = ["-date"]
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):

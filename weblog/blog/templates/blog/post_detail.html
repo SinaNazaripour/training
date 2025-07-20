@@ -1,18 +1,38 @@
 {% extends "parents/base.html"%}
+{% load jformat%}
 {%block title %}post{%endblock%}
 {%block content %}
-   <h1>{{post.title}}</h1>
+     <main class="container">
+    <article class="post-detail">
+      <h2>{{post.title}}</h2>
+      <div class="post-meta">
+        <span>{{post.author}}</span>
+        <span> | تاریخ:{{post.published|jformat:" %H:%M - %Y/%m/%d "}}</span>
+        <span> | ۲۴۵ بازدید</span>
+        <span> | {{post.comments.count}} دیدگاه</span>
+      </div>
+      <p>
+        {{post.description}}
+      </p>
+    </article>
+    
+     <section class="add-comment">
+      <h3>افزودن دیدگاه جدید</h3>
+      <form method="post" action="{% url 'blog:comment' post.id%}">
+        {%csrf_token%}
+        <textarea placeholder="متن دیدگاه..." rows="4" required name="body"></textarea>
+        <button type="submit">ارسال دیدگاه</button>
+      </form>
+    </section>
 
-   <form method="post" action="{% url 'blog:comment' post.id %}">
-      {%csrf_token%}
-      {{form.as_p}}
-      <input type="submit" value="ارسال">
-   </form>
-   <div class="comments_box">
-      <h1>کامنت ها</h1>
+    <section class="comments">
+      <h3>دیدگاه‌ها ({{post.comments.count}})</h3>
       {% for comment in comments  %}
-         <div class="comment">{{comment.name}}:{{comment.body}}</div>
+      <div class="comment">
+        <strong>{{comment.name}}</strong>
+        <p>{{comment.body}}</p>
+      </div>
       {% endfor %}
-      
-   </div>
+    </section>
+  </main>
 {%endblock%}

@@ -1,24 +1,10 @@
 {% extends "parents/base.html"%}
-{% load jformat%}
-{%block title %} posts{%endblock%}
-{%block content %}
-     
-	<li style="--i: {{forloop.counter}}">
-		 <h3>
-            
-
-         </h3><p></p>
-		<p>
-        
-    </p>
-	</li>
-
-<!--  we have to end for tag  -->
-       </ol>
-
-  <main class="container">
+{%load jformat%}
+{%block title %}search{%endblock%}
+{%block content%}
+<main class="container">
     <section class="posts">
-      {% for post in posts %}
+      {% for post in results %}
       <article class="post">
         <h2>{{post.title}}</h2>
         <div class="meta">
@@ -34,5 +20,4 @@
       {% endfor %}
     </section>
   </main>
-  <h3 style="" center>{% include 'partials/paginator.html' with page_obj=posts %}</h3>
 {%endblock%}

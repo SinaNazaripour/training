@@ -30,6 +30,7 @@ class Post(models.Model):
    updated = jmodels.jDateTimeField(auto_now=True)
 
 
+
    class Meta:
        ordering=["-published"]
        indexes=[models.Index(fields=['-published'])]
@@ -50,6 +51,7 @@ class Ticket(models.Model):
     body=models.TextField(max_length=30)
     date = jmodels.jDateTimeField(auto_now_add=True)
 
+
     class Meta:
         ordering = ["-date"]
         indexes = [models.Index(fields=['-date'])]
@@ -64,6 +66,7 @@ class Comment(models.Model):
     activation=models.BooleanField(default=False)
     # date
     created=jmodels.jDateTimeField(auto_now_add=True)
+
 
     class Meta:
         ordering=["-created"]
