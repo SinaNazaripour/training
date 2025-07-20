@@ -19,20 +19,24 @@
   <main class="container">
     <section class="posts">
       {% for post in posts %}
-      <article class="post">
-        <h2>{{post.title}}</h2>
-        <div class="meta">
-          <span>✍️{{post.author}}</span>
-         
-          <span>📅 {{post.published|jformat:"%Y-%m-%d"}}</span>
-          <span>💬 {{post.comments.count}}</span>
-          
+        <div class="post-card">
+          <h2 class="post-title">{{post.title}}</h2>
+            <div class="post-meta">
+              <span>✍️ نویسنده: {{post.author}}</span>
+              <span>📅 {{post.published|jformat:"%Y-%m-%d"}}</span>
+              <span>💬 {{post.comments.count}}</span>
+            </div>
+          <p class="post-content">
+           {{post.description|truncatewords:6}}
+          </p>
+          <div class="post-actions">
+          <a href="{{post.get_absolute_url}}" class="read-more">ادامه مطلب</a>
+          </div>
         </div>
-        <p> {{post.description|truncatewords:6}}</p>
-        <a href="{{post.get_absolute_url}}" class="read-more">ادامه مطلب</a>
-      </article>
       {% endfor %}
     </section>
   </main>
+  
+
   <div class="center"><h3 style="" center>{% include 'partials/paginator.html' with page_obj=posts %}</h3></div>
 {%endblock%}

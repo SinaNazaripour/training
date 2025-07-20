@@ -38,3 +38,13 @@ def best_users(count=3):
 @register.filter(name="markdown")
 def to_markdown(text):
     return mark_safe(markdown(text))
+
+@register.filter(name="bold")
+def bold(text):
+    return mark_safe(markdown(f"**{text}**"))
+
+@register.simple_tag(name="comments_of_this_post")
+def comment_counter(id):
+    post=Post.objects.filter(id=id)[0]
+    comments=post.comments.filter(activation=True)
+    return comments.count()
