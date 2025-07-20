@@ -11,7 +11,7 @@ class PublishManager(models.Manager):
 
 class Post(models.Model):
    author=models.ForeignKey(User,related_name="posts",on_delete=models.CASCADE)
-   title = models.CharField(max_length=12)
+   title = models.CharField(max_length=120)
    description = models.TextField()
    reading_time=models.PositiveIntegerField(default=3)
    slug = models.SlugField(max_length=30)

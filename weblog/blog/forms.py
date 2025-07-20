@@ -19,7 +19,7 @@ class CommentForm(forms.ModelForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model=Post
-        fields=["title","description"]
+        fields=["title","description","reading_time"]
         widgets={
             "description":forms.Textarea
         }

@@ -1,12 +1,41 @@
 {% extends "parents/base.html"%}
 {%block title %}Add_Post{%endblock%}
 {%block content%}
-<form method="post">
-    {%csrf_token%}
-    {{form}}
-<!--    <input type="submit" value="ارسال">-->
-    <input type="submit">
-</form>
+  <div class="errors">
+    {% if form.errors %}
+        {% for field in form  %}
+            {% if field.errors %}
+                {% for error in field.errors  %}
+                  {{field.label}}:{{error}}
+                  <br>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% if form.non_field_errors %}
+        {{form.non_field_errors}}
+    {% endif %}
+  </div>
+  <main class="container">
+    <section class="ticket-form">
+      <h2> ایجاد پست جدید</h2>
+      <form method="post">
+        {%csrf_token%}
+        <label for="title">موضوع</label>
+        <input type="text" id="title" name="title"{% if form.title.value %}value="{{form.title.value}}"{% endif %}>
+
+        
+        <label for="reading_time">زمان مطالعه</label>
+        <input type="number" id="reading_time" name="reading_time"{% if form.reading_time.value %}value="{{form.reading_time.value}}"{% endif %}>
+
+
+        <label for="description">متن</label>
+         <textarea  rows="4" id="description" name="description">{% if form.description.value %} {{form.description.value}} {% endif %}</textarea>
+
+        <button type="submit">ارسال پست</button>
+      </form>
+    </section>
+  </main>
 
 
 {%endblock%}
