@@ -48,7 +48,7 @@ def comment_counter(id):
     post=Post.objects.filter(id=id)[0]
     comments=post.comments.filter(activation=True)
     return comments.count()
-
+# to have messages anywhere
 @register.inclusion_tag("partials/message.html",name="show_messages")
 def message(messages):
     return {
