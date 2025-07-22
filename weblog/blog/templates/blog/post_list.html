@@ -1,9 +1,17 @@
 {% extends "parents/base.html"%}
 {% load jformat%}
+{% load blog_tags%}
 {%block title %} posts{%endblock%}
 {%block content %}
-     
-	<li style="--i: {{forloop.counter}}">
+{% if messages %}
+
+  {% for message in messages %}
+    <div class="toast show">
+      <p>{{ message }}</p>
+    </div>
+  {% endfor %}
+{% endif %}
+
 		 <h3>
             
 
@@ -24,7 +32,7 @@
             <div class="post-meta">
               <span>✍️ نویسنده: {{post.author}}</span>
               <span>📅 {{post.published|jformat:"%Y-%m-%d"}}</span>
-              <span>💬 {{post.comments.count}}</span>
+              <span>💬 {%comments_of_this_post post.id%}</span>
             </div>
           <p class="post-content">
            {{post.description|truncatewords:6}}

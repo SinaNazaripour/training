@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_POST
+from django.db.models import Q
+from django.contrib import messages
 from django.views.generic import ListView
 
 from .models import Post, Ticket
@@ -17,7 +19,7 @@ def index(request):
 
 def post_list(request):
     posts = Post.publish.all()
-    paginator = Paginator(posts, 4)
+    paginator = Paginator(posts, 3)
     num_pages = request.GET.get('page')
     try:
         posts = paginator.get_page(num_pages)
@@ -54,9 +56,11 @@ def ticket(request):
             cd = form.cleaned_data
             ticket_obj = Ticket.objects.create(author_name=cd["author_name"], title=cd["title"], body=cd["body"],
                                                author_email=cd["author_email"])
+            messages.success(request, "پست با موفقیت ارسال شد!")
             return redirect("blog:index")
     else:
         form = TicketForm()
+
     return render(request, "forms/ticket.html", {"form": form})
 
 @login_required
@@ -75,7 +79,8 @@ def comment(request,id):
         "comment":comment_obj,
         "form":form
     }
-    return render(request,"forms/comment.html",context)
+    messages.success(request,"کامنت در انتظار تایید")
+    return redirect("blog:post_detail",post.id)
 
 @login_required
 def add_post(request):
@@ -85,6 +90,7 @@ def add_post(request):
             post_obj=form.save(commit=False)
             post_obj.author=request.user
             post_obj.save()
+            messages.success(request, "پست با موفقیت ارسال شد!")
             return redirect('blog:post_list')
     else:
         form=PostForm()
@@ -96,7 +102,7 @@ def search(request):
         form=Search(data=request.GET)
         if form.is_valid():
             query=form.cleaned_data['query']
-            results=Post.publish.filter(description__contains=query)
+            results=Post.publish.filter(Q(description__contains=query)|Q(title__icontains=query))
     context={
         "results":results,
          "query":query

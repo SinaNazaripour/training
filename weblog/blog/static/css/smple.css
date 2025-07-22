@@ -347,7 +347,8 @@ body {
   transform: translateY(-2px);
 }
 .pagination{
-  width:200px;
+   text-align:center;
+  max-width:500px;
   margin:0 auto;
 }
 .errors{

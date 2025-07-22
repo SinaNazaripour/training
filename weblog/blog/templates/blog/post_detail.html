@@ -3,9 +3,16 @@
 {% load blog_tags%}
 {%block title %}post{%endblock%}
 {%block content %}
+{% if messages %}
+  <div id="toast" class="toast">
+    {% for message in messages %}
+      <p>{{ message }}</p>
+    {% endfor %}
+  </div>
+{% endif %}
      <main class="container">
     <article class="post-detail">
-      <h2>{{post.title}}</h2>
+      <h2 style="text-align:center;">{{post.title}}</h2>
       <div class="post-meta">
         <span> |نویسنده:{{post.author|bold}}</span>
         <span> | تاریخ:{{post.published|jformat:" %H:%M - %Y/%m/%d "}}</span>

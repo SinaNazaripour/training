@@ -2,6 +2,7 @@
 {% load blog_tags%}
 {%block title %} homePage{%endblock%}
 {%block content %}
+{% show_messages messages%}
 <section class="toolbar container">
       <form method="get" action="{% url 'blog:search'%}" class="search-form">
         {%csrf_token%}

@@ -32,5 +32,6 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = ["name", "body", "created","post","activation"]
     list_display_links = ["name"]
     search_fields = ["name", "body"]
-    ordering = ["created"]
+    ordering = ["-created"]
+    list_filter = [("created",JDateFieldListFilter)]
     list_editable = ["activation"]

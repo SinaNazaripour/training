@@ -1,8 +1,10 @@
 {% extends "parents/base.html"%}
 {%load jformat%}
+{%load blog_tags%}
 {%block title %}search{%endblock%}
 {%block content%}
 <main class="container">
+  <h1>جستجو برای '{{query}}'</h1>
     <section class="posts">
       {% for post in results %}
       <article class="post">
