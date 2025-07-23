@@ -5,7 +5,6 @@
 {% show_messages messages%}
 <section class="toolbar container">
       <form method="get" action="{% url 'blog:search'%}" class="search-form">
-        {%csrf_token%}
        <input type="text" placeholder="جستجوی پست‌ها..." name="query"/>
        <input type="submit" value="جستجو" style="width: auto;">
       </form>

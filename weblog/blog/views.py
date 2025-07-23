@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_POST
 from django.db.models import Q
 from django.contrib import messages
+from django.contrib.postgres.search import SearchVector,SearchQuery,SearchRank,TrigramSimilarity
 from django.views.generic import ListView
 
 from .models import Post, Ticket
@@ -102,7 +103,14 @@ def search(request):
         form=Search(data=request.GET)
         if form.is_valid():
             query=form.cleaned_data['query']
-            results=Post.publish.filter(Q(description__contains=query)|Q(title__icontains=query))
+            # serach_query=SearchQuery(query)
+            # vector=SearchVector('title',weight='A')+SearchVector('description',weight='B')+\
+            #     SearchVector('slug',weight='C')
+            # rank=SearchRank(vector,serach_query)
+            # results=Post.publish.annotate(vector=vector,rank=rank).filter(rank__gt=.1).order_by('-rank')
+            result1=Post.publish.annotate(similarity=TrigramSimilarity('title',query)).filter(similarity__gt=.1)
+            result2=Post.publish.annotate(similarity=TrigramSimilarity('description',query)).filter(similarity__gt=.1)
+            results=(result1|result2).order_by('-similarity')
     context={
         "results":results,
          "query":query

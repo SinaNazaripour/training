@@ -4,6 +4,10 @@
 {%block title %}search{%endblock%}
 {%block content%}
 <main class="container">
+  <form method="get"  class="search-form">
+       <input type="text" placeholder="جستجوی پست‌ها..." name="query"/>
+       <input type="submit" value="جستجو" style="width: auto;">
+      </form>
   <h1>جستجو برای '{{query}}'</h1>
     <section class="posts">
       {% for post in results %}
@@ -19,6 +23,14 @@
         <p> {{post.description|truncatewords:6}}</p>
         <a href="{{post.get_absolute_url}}" class="read-more">ادامه مطلب</a>
       </article>
+      {%empty%}
+      <div class="container">
+        <div class="card">
+          <h1>😕 نتیجه‌ای یافت نشد</h1>
+          <p>متاسفیم! هیچ پستی مطابق با عبارت جستجو شده پیدا نشد.</p>
+          <a href="{% url 'blog:index' %}" class="btn_back">بازگشت به صفحه اصلی</a>
+        </div>
+      </div>
       {% endfor %}
     </section>
   </main>
