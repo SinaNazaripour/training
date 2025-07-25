@@ -28,15 +28,21 @@
     <section class="posts">
       {% for post in posts %}
         <div class="post-card">
-          <h2 class="post-title">{{post.title}}</h2>
+          <div class="post-info">
+            <h2 class="post-title">{{post.title}}</h2>
             <div class="post-meta">
               <span>✍️ نویسنده: {{post.author}}</span>
               <span>📅 {{post.published|jformat:"%Y-%m-%d"}}</span>
               <span>💬 {%comments_of_this_post post.id%}</span>
             </div>
-          <p class="post-content">
-           {{post.description|truncatewords:6}}
-          </p>
+            <p class="post-content">
+             {{post.description|truncatewords:6}}
+            </p>
+          </div>
+          
+          <div class="image-holder">
+            {% if post.images.first.image_file.url %}<img src="{{post.images.first.image_file.url}}" alt="{{post.images.first.title}}" class="post-image-pre">{% endif %}
+          </div>
           <div class="post-actions">
           <a href="{{post.get_absolute_url}}" class="read-more">ادامه مطلب</a>
           </div>

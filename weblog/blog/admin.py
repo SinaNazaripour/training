@@ -1,12 +1,24 @@
 
+
 from django.contrib import admin
 from django_jalali.admin.filters import JDateFieldListFilter
 
-from .models import Post, Ticket, Comment
+from .models import Post, Ticket, Comment,Image
 
 admin.sites.AdminSite.site_header =" هدر "
 admin.sites.AdminSite.site_title ="پنل مدیریت تایتل سایت"
 admin.sites.AdminSite.index_title ="پنل مدیریت تایتل ایندکس "
+# inlines
+class CommentInline(admin.TabularInline):
+    model = Comment
+    extra = 0
+
+
+class ImageInline(admin.TabularInline):
+    model = Image
+    extra = 0
+
+
 
 # Register your models here.
 @admin.register(Post)
@@ -19,6 +31,12 @@ class PostAmin(admin.ModelAdmin):
     raw_id_fields = ["author"]
     prepopulated_fields = {'slug':['title']}
     list_display_links = ["title"]
+    inlines = [
+        CommentInline,
+        ImageInline
+    ]
+
+
 
 @admin.register(Ticket)
 class TicketAdmin(admin.ModelAdmin):
@@ -35,3 +53,10 @@ class CommentAdmin(admin.ModelAdmin):
     ordering = ["-created"]
     list_filter = [("created",JDateFieldListFilter)]
     list_editable = ["activation"]
+
+@admin.register(Image)
+class ImageAdmin(admin.ModelAdmin):
+    list_display = ["title", "description", "created", "post"]
+    list_display_links = ["title"]
+    ordering = ["-created"]
+    list_filter = [("created", JDateFieldListFilter)]
