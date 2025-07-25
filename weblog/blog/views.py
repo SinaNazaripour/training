@@ -110,7 +110,8 @@ def search(request):
             # results=Post.publish.annotate(vector=vector,rank=rank).filter(rank__gt=.1).order_by('-rank')
             result1=Post.publish.annotate(similarity=TrigramSimilarity('title',query)).filter(similarity__gt=.1)
             result2=Post.publish.annotate(similarity=TrigramSimilarity('description',query)).filter(similarity__gt=.1)
-            results=(result1|result2).order_by('-similarity')
+            result3=Post.publish.annotate(similarity=TrigramSimilarity('images__title',query)).filter(similarity__gt=.1)
+            results=(result1|result2|result3).order_by('-similarity')
     context={
         "results":results,
          "query":query
