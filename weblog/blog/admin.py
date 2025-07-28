@@ -51,7 +51,7 @@ class CommentAdmin(admin.ModelAdmin):
     list_display_links = ["name"]
     search_fields = ["name", "body"]
     ordering = ["-created"]
-    list_filter = [("created",JDateFieldListFilter)]
+    list_filter = [("created",JDateFieldListFilter),'activation']
     list_editable = ["activation"]
 
 @admin.register(Image)

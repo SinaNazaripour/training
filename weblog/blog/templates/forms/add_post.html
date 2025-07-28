@@ -19,7 +19,7 @@
   <main class="container">
     <section class="ticket-form">
       <h2> ایجاد پست جدید</h2>
-      <form method="post">
+      <form method="post"  enctype="multipart/form-data">
         {%csrf_token%}
         <label for="title">موضوع</label>
         <input type="text" id="title" name="title"{% if form.title.value %}value="{{form.title.value}}"{% endif %}>
@@ -31,7 +31,7 @@
 
         <label for="description">متن</label>
          <textarea  rows="4" id="description" name="description">{% if form.description.value %} {{form.description.value}} {% endif %}</textarea>
-
+         <input type="file" name="image">
         <button type="submit">ارسال پست</button>
       </form>
     </section>

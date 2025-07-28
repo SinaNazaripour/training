@@ -17,6 +17,7 @@ class CommentForm(forms.ModelForm):
             'body':forms.Textarea
         }
 class PostForm(forms.ModelForm):
+    image=forms.ImageField(label='تصویر')
     class Meta:
         model=Post
         fields=["title","description","reading_time"]

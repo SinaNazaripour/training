@@ -10,6 +10,8 @@ urlpatterns=[
     path('ticket/',views.ticket,name="ticket"),
     path('posts/<int:id>/comment/',views.comment,name="comment"),
     path('add_post',views.add_post,name="add_post"),
-    path('search/',views.search,name='search')
+    path('search/',views.search,name='search'),
+    path('profile/',views.profile,name='profile'),
+    path('profile/delete_post/<int:id>',views.delete_post,name='delete_post')
 
 ]

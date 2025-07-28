@@ -1,0 +1,17 @@
+{% extends "parents/base.html"%}
+{%block title %}delete{%endblock%}
+{%block content%}
+
+<div class="confirm-container">
+    <h2>حذف پست</h2>
+    <p>آیا مطمئن هستید که می‌خواهید پست "<strong>{{post.title}}</strong>" را حذف کنید؟ این عملیات غیرقابل بازگشت است.</p>
+    <form method="post">
+      {% csrf_token %}
+      <div class="actions">
+        <input type="submit" class="btn delete" value="بله حذف کن">
+        <a href="{% url 'blog:profile' %}" class="btn cancel">بازگشت</a>
+      </div>
+    </form>
+  </div>
+
+{%endblock%}

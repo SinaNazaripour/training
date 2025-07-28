@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.contrib.postgres.search import SearchVector,SearchQuery,SearchRank,TrigramSimilarity
 from django.views.generic import ListView
 
-from .models import Post, Ticket
+from .models import Post, Ticket,Image
 from .forms import *
 
 
@@ -86,11 +86,13 @@ def comment(request,id):
 @login_required
 def add_post(request):
     if request.method=="POST":
-        form=PostForm(request.POST)
+        form=PostForm(request.POST,request.FILES)
         if form.is_valid():
             post_obj=form.save(commit=False)
             post_obj.author=request.user
             post_obj.save()
+            Image.objects.create(post=post_obj,image_file=form.cleaned_data['image'],description=post_obj.description[:10])
+
             messages.success(request, "پست با موفقیت ارسال شد!")
             return redirect('blog:post_list')
     else:
@@ -117,3 +119,21 @@ def search(request):
          "query":query
         }
     return render(request, "blog/search.html", context)
+
+def profile(request):
+    user=request.user
+    posts=Post.publish.filter(author=user)
+    context={
+        'posts':posts,
+        'user':user
+    }
+    return render(request,'blog/profile.html',context)
+
+def delete_post(request,id):
+    post=get_object_or_404(Post,id=id)
+    if request.method=='POST':
+        post.delete()
+        messages.success(request,"پست با موفقیت حذف شد")
+        return redirect('blog:profile')
+
+    return render(request,'forms/delete_post.html',{'post':post})
