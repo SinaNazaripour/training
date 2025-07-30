@@ -18,7 +18,14 @@
   </div>
   <main class="container">
     <section class="ticket-form">
-      <h2> ایجاد پست جدید</h2>
+      {% if post %}
+          <h2>ویرایش پست</h2>
+      {% else %}
+          <h2>ایجاد پست جدید</h2>
+      {% endif %}
+      
+      
+
       <form method="post"  enctype="multipart/form-data">
         {%csrf_token%}
         <label for="title">موضوع</label>
@@ -34,6 +41,18 @@
          <input type="file" name="image">
         <button type="submit">ارسال پست</button>
       </form>
+      {% if post %}
+          <div class="post-card">
+
+              {% for image in post.images.all %}
+                  <div class="card">
+                    <img src="{{image.image_file.url}}" class="post-image-pre">
+                    <a href="{% url 'blog:delete_image' image.id post.id %}" class="btn">حذف تصویر</a>
+                  </div>
+              {% endfor %}
+        
+          </div>
+      {% endif %}
     </section>
   </main>
 

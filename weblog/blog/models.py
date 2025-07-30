@@ -77,6 +77,11 @@ class Image(models.Model):
             self.title = os.path.splitext(os.path.basename(self.image_file.name))[0]
         super().save(*args, **kwargs)
 
+    def delete(self,*args,**kwargs):
+        storage,path=self.image_file.storage,self.image_file.path
+        storage.delete(path)
+        super().delete(*args,**kwargs)
+
     class Meta:
         ordering = ["-created"]
         indexes = [models.Index(fields=['-created'])]

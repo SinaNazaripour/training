@@ -1,0 +1,40 @@
+{% extends "parents/base.html"%}
+{% load jformat%}
+{% load blog_tags%}
+{%block title %}post{%endblock%}
+{%block content %}
+{% show_messages messages%}
+<div class="dashboard-container">
+    <h2>{{user}}</h2>
+     <div class="buttons">
+      <a href="{%url 'blog:add_post'%}" class="btn btn-green" >➕ افزودن پست</a>
+      <a href="{%url 'blog:ticket'%}" class="btn btn-yellow">📝 ایجاد تیکت</a>
+    </div>
+    <table class="post-table">
+      <thead>
+        <tr>
+          <th>عنوان</th>
+          <th>تاریخ انتشار</th>
+          <th>کامنت ها</th>
+          <th>عملیات</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in posts %}
+        <tr>
+          <td>{{ post.title }}</td>
+          <td>{{ post.published|jformat:"%Y/%m/%d" }}</td>
+          <td>{{ post.comments.count}}</td>
+          <td class="actions">
+            <a href="{% url 'blog:edit_post' post.id  %}" class="btn edit">ویرایش</a>
+            <a href="{% url 'blog:delete_post' post.id  %}" class="btn delete">حذف</a>
+            </form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">هیچ پستی وجود ندارد.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
