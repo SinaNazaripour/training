@@ -26,3 +26,7 @@ class PostForm(forms.ModelForm):
         }
 class Search(forms.Form):
     query=forms.CharField(max_length=50)
+
+class LoginForm(forms.Form):
+    username=forms.CharField(max_length=15)
+    password=forms.CharField(max_length=15,widget=forms.PasswordInput)

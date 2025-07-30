@@ -1,6 +1,6 @@
 import os.path
 from pathlib import Path
-
+from django.contrib.auth import authenticate , login
 from django.template.defaultfilters import slugify
 from jdatetime import datetime as jdate
 from django.db.models import ImageField

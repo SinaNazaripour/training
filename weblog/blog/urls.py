@@ -14,6 +14,7 @@ urlpatterns=[
     path('profile/',views.profile,name='profile'),
     path('profile/delete_post/<int:id>',views.delete_post,name='delete_post'),
     path('profile/edit_post/<int:post_id>',views.edit_post,name='edit_post'),
-    path('profile/delete_image/<image_id>/<post_id>',views.delete_image,name='delete_image')
+    path('profile/delete_image/<image_id>/<post_id>',views.delete_image,name='delete_image'),
+    path('login/',views.login_user,name='login')
 
 ]

@@ -1,6 +1,7 @@
-
+from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_POST
 from django.db.models import Q
@@ -154,3 +155,21 @@ def delete_image(request,image_id,post_id):
     image=get_object_or_404(Image,id=image_id)
     image.delete()
     return redirect('blog:edit_post',post_id)
+
+def login_user(request):
+    if request.method=='POST':
+        form=LoginForm(request.POST)
+        if form.is_valid():
+            cd=form.cleaned_data
+            user=authenticate(request,username=cd['username'],password=cd['password'])
+            if user:
+                if user.is_active:
+                    login(request, user)
+                    return redirect('blog:index')
+                else:
+                    HttpResponse('you are banned')
+            else:
+                HttpResponse('user not found')
+    else:
+        form=LoginForm()
+    return render(request,'forms/login.html',{'form':form})
