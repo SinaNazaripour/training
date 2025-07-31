@@ -1,5 +1,6 @@
 from django.urls import path
 from . import  views
+from django.contrib.auth import views as auth_views
 # from.views import PostListView
 app_name ="blog"
 urlpatterns=[
@@ -15,6 +16,7 @@ urlpatterns=[
     path('profile/delete_post/<int:id>',views.delete_post,name='delete_post'),
     path('profile/edit_post/<int:post_id>',views.edit_post,name='edit_post'),
     path('profile/delete_image/<image_id>/<post_id>',views.delete_image,name='delete_image'),
-    path('login/',views.login_user,name='login')
+    path('login/',auth_views.LoginView.as_view(),name='login'),
+    path('logout/',auth_views.LogoutView.as_view(),name='logout'),
 
 ]

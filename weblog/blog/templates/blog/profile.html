@@ -37,4 +37,8 @@
       </tbody>
     </table>
   </div>
+  <form action="{% url 'blog:logout'%}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="خروج" class="btn">
+  </form>
 {% endblock %}

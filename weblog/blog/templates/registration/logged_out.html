@@ -1,0 +1,15 @@
+{% extends "parents/base.html"%}
+{% load static%}
+{%block title %} Ticket{%endblock%}
+{%block head%}<link rel="stylesheet" type="text/css" href="{% static 'css/ticket.css'%}"> {%endblock%}
+{%block content %}
+<div class="container">
+    <div class="card">
+      <img src="{% static 'images/logout.svg' %}" alt="خروج موفق" class="image" height="300px" />
+      <h1>با موفقیت خارج شدید</h1>
+      <p>منتظرتان هستیم برای ورود مجدد 😊</p>
+      <a href="{% url 'blog:login' %}" class="btn_back">ورود دوباره</a>
+      <a href="{% url 'blog:index' %}" class="btn_back">صفحه اصلی</a>
+    </div>
+  </div>
+{%endblock%}

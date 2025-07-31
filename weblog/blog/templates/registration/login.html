@@ -1,0 +1,36 @@
+{% extends "parents/base.html"%}
+{% load static%}
+{%block title %} Ticket{%endblock%}
+{%block head%}<link rel="stylesheet" type="text/css" href="{% static 'css/ticket.css'%}"> {%endblock%}
+{%block content %}
+  <main class="container">
+      <div class="errors">
+    {% if form.errors %}
+        {% for field in form  %}
+            {% if field.errors %}
+                {% for error in field.errors  %}
+                  {{field.label}}:{{error}}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% if form.non_field_errors %}
+        {{form.non_field_errors}}
+    {% endif %}
+  </div>
+    <section class="ticket-form">
+      <h2>ورود</h2>
+      <form method="post">
+        {%csrf_token%}
+        <label for="author_name">نام کاربری </label>
+        <input type="text" id="author_name" name="username">
+        <label for="password">پسورد</label>
+        <input type="password" id="password" name="password">
+        <input type="hidden" name="next" value="{{next}}">
+        <button type="submit">ورود</button>
+
+      </form>
+    </section>
+  </main>
+
+{%endblock%}
