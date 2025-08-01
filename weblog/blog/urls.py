@@ -18,5 +18,6 @@ urlpatterns=[
     path('profile/delete_image/<image_id>/<post_id>',views.delete_image,name='delete_image'),
     path('login/',auth_views.LoginView.as_view(),name='login'),
     path('logout/',auth_views.LogoutView.as_view(),name='logout'),
-
+    path('change-password/',auth_views.PasswordChangeView.as_view(success_url='done'),name='change_password'),
+    path('change-password/done/',auth_views.PasswordChangeDoneView.as_view(),name='password_change_done')
 ]

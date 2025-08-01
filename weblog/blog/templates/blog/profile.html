@@ -28,7 +28,7 @@
           <td class="actions">
             <a href="{% url 'blog:edit_post' post.id  %}" class="btn edit">ویرایش</a>
             <a href="{% url 'blog:delete_post' post.id  %}" class="btn delete">حذف</a>
-            </form>
+
           </td>
         </tr>
         {% empty %}
@@ -41,4 +41,5 @@
     {% csrf_token %}
     <input type="submit" value="خروج" class="btn">
   </form>
+    <a href="{% url 'blog:change_password'  %}" class="btn delete">تغییر رمز</a>
 {% endblock %}
